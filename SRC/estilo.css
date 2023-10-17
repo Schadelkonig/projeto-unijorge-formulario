@@ -1,0 +1,19 @@
+body {
+	margin:0 auto;
+	background-image:url(imagens/fundo.jpg);
+	background-repeat:no-repeat;
+	background-size:100%;
+}
+
+.formulario1 {
+	background-position: 0%;
+	margin: 30px;
+	margin-right: 500px;
+	margin-left: 500px;
+	text-align: justify;
+}
+			
+.titulo {
+	width:17%;
+	margin:0 auto;
+}

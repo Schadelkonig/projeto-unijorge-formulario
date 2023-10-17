@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>ENTERPRISE Co.</title>
+  <link rel="stylesheet" href="SRC/estilo.css"> 
+		<style>
+			body {
+			font-family: Arial, sans-serif;
+			margin: 20px;
+      background-image: url(SRC/imagens/fundo.jpg);
+
+			}
+			label {
+			display: block;
+			margin-bottom: 10px;
+			}
+			input[type="text"],
+			input[type="email"],
+			input[type="date"] {
+			width: 200px;
+			}
+			.error {
+			color: red;
+			font-weight: bold;
+			margin-top: 5px;
+			}
+		</style>
+</head>
+<body>
+<div class="titulo">
+  <h1>Enterprise Co.</h1>
+</div>
+  
+  <form onsubmit="return validarFormulario()">
+<div class="formulario1">
+  <fieldset id="formulario"><legend>FORMULÁRIO</legend>
+    <p><label for="nome">Nome:</label>
+    <input type="text" id="nome" size="40" maxlength="40" placeholder="Digite seu nome completo." required>
+    <span id="nomeErro" class="error"></span></p>
+    
+    <p><label for="email">E-mail:</label>
+    <input type="email" id="email" placeholder="exemplo@exemplo.com" required>
+    <span id="emailErro" class="error"></span></p>
+    
+    <p><label for="dataNascimento">Data de Nascimento:</label>
+    <input type="date" id="dataNascimento" required>
+    <span id="dataNascimentoErro" class="error"></span></p>
+    
+    <p><label>Gênero:</label>
+    <input type="radio" name="genero" value="Feminino" required> Feminino
+    <input type="radio" name="genero" value="Masculino" required> Masculino
+    <span id="generoErro" class="error"></span></p>
+    
+    <p><label>Estado Civil:</label>
+    <select id="estadoCivil" required>
+      <option value="">Selecione</option>
+      <option value="Solteiro(a)">Solteiro(a)</option>
+      <option value="Casado(a)">Casado(a)</option>
+      <option value="Outros">Outros</option>
+    </select>
+    <span id="estadoCivilErro" class="error"></span></p>
+    
+    <p><label>Áreas de Interesse:</label>
+    <p><input type="checkbox" name="interesse" value="Análise">Análise</p>
+    <p><input type="checkbox" name="interesse" value="Banco de dados">Banco de dados</p>
+    <p><input type="checkbox" name="interesse" value="Desenvolvimento">Desenvolvimento</p>
+    <p><input type="checkbox" name="interesse" value="Engenharia de software">Engenharia de software</p>
+    <p><input type="checkbox" name="interesse" value="Redes de computadores">Redes de computadores</p>
+    <span id="interesseErro" class="error"></span></p>
+	</fieldset>
+</div>
+    <div style="text-align:center">    
+      <p class="botaoenviar"><input type="submit" value="Enviar"></p>
+    </div>
+  </form>
+
+  <script>
+    function validarFormulario() {
+      var nome = document.getElementById("nome").value;
+      var email = document.getElementById("email").value;
+      var dataNascimento = document.getElementById("dataNascimento").value;
+      var genero = document.querySelector('input[name="genero"]:checked');
+      var estadoCivil = document.getElementById("estadoCivil").value;
+      var interesses = document.querySelectorAll('input[name="interesse"]:checked');
+
+      var nomeErro = document.getElementById("nomeErro");
+      var emailErro = document.getElementById("emailErro");
+      var dataNascimentoErro = document.getElementById("dataNascimentoErro");
+      var generoErro = document.getElementById("generoErro");
+      var estadoCivilErro = document.getElementById("estadoCivilErro");
+      var interesseErro = document.getElementById("interesseErro");
+
+      nomeErro.textContent = "";
+      emailErro.textContent = "";
+      dataNascimentoErro.textContent = "";
+      generoErro.textContent = "";
+      estadoCivilErro.textContent = "";
+      interesseErro.textContent = "";
+
+      var valido = true;
+
+      if (nome.length < 15) {
+        nomeErro.textContent = "O nome deve ter no mínimo 15 caracteres";
+        valido = false;
+      }
+
+      if (email.length < 10 || !email.includes("@")) {
+        emailErro.textContent = "O e-mail deve ter pelo menos 10 caracteres e conter o símbolo '@'";
+        valido = false;
+      }
+
+      var dataNascimentoObj = new Date(dataNascimento);
+      var hoje = new Date();
+
+      if (dataNascimentoObj >= hoje) {
+        dataNascimentoErro.textContent = "Data de nascimento inválida";
+        valido = false;
+      }
+
+      if (genero === null) {
+        generoErro.textContent = "Selecione uma opção de gênero";
+        valido = false;
+      }
+
+      if (estadoCivil === "Solteiro(a)" && dataNascimentoObj >= new Date(hoje.getFullYear() - 15, hoje.getMonth(), hoje.getDate())) {
+        estadoCivilErro.textContent = "É necessário ter mais de 15 anos para selecionar 'Solteiro(a)'";
+        valido = false;
+      }
+
+      if (interesses.length === 0) {
+        interesseErro.textContent = "Selecione pelo menos uma área de interesse";
+        valido = false;
+      }
+
+      if (valido) {
+        alert("Dados enviados com sucesso!");
+        return true;
+      } else {
+        return false;
+      }
+    }
+  </script>
+</div>
+</body>
+</html>
